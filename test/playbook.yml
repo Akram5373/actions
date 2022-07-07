@@ -1,12 +1,14 @@
-- name: Test Action
-  hosts: all
+- name: Start instances
+  hosts: localhost
+  gather_facts: false 
+  connection: local
   tasks:
-    - name: Copy file
-      copy:
-        src: requirements.yml
-        dest: /tmp/requirements.yml
-    - name: Install cowsay
-      become: yes
-      apt:
-        name: cowsay
-        update_cache: yes
+    - name: start a particular instance by its ID
+      amazon.aws.ec2_instance:
+        state: running
+        instance_ids:
+          - i-073fc7e894a5fe86c
+    - name: Sleep for 300 seconds and continue
+      ansible.builtin.wait_for:
+        timeout: 300
+      delegate_to: localhost
