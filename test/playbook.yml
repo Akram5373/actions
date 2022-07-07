@@ -9,6 +9,7 @@
               pip install botocore
     - name: start a particular instance by its ID
       amazon.aws.ec2_instance:
+        region: ap-south-1a
         state: running
         instance_ids:
           - i-073fc7e894a5fe86c
